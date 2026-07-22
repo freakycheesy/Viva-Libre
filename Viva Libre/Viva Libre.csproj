@@ -1,0 +1,525 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<RootNamespace>Viva_Libre</RootNamespace>
+		<LangVersion>default</LangVersion>
+		<IsPackable>false</IsPackable>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<AssemblyName>Viva_Libre</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="AmplifyShaderEditor.Samples.BuiltIn">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\AmplifyShaderEditor.Samples.BuiltIn.dll</HintPath>
+		</Reference>
+		<Reference Include="ArcadeMachine-Plumbers">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ArcadeMachine-Plumbers.dll</HintPath>
+		</Reference>
+		<Reference Include="ArcadeMachine-SuperShopping">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ArcadeMachine-SuperShopping.dll</HintPath>
+		</Reference>
+		<Reference Include="ArcadeMachine">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ArcadeMachine.dll</HintPath>
+		</Reference>
+		<Reference Include="ArcadeMachineGamesOld">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ArcadeMachineGamesOld.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="Bitstream">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Bitstream.dll</HintPath>
+		</Reference>
+		<Reference Include="ByteConverter">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ByteConverter.dll</HintPath>
+		</Reference>
+		<Reference Include="ch.sycoforge.Decal">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ch.sycoforge.Decal.dll</HintPath>
+		</Reference>
+		<Reference Include="ch.sycoforge.Logging">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ch.sycoforge.Logging.dll</HintPath>
+		</Reference>
+		<Reference Include="ch.sycoforge.Unity.Runtime">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ch.sycoforge.Unity.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Cinemachine">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Cinemachine.dll</HintPath>
+		</Reference>
+		<Reference Include="CTAA">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\CTAA.dll</HintPath>
+		</Reference>
+		<Reference Include="DebugX">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\DebugX.dll</HintPath>
+		</Reference>
+		<Reference Include="Development">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Development.dll</HintPath>
+		</Reference>
+		<Reference Include="Facepunch.Steamworks.Win64">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Facepunch.Steamworks.Win64.dll</HintPath>
+		</Reference>
+		<Reference Include="FloatCrusher">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\FloatCrusher.dll</HintPath>
+		</Reference>
+		<Reference Include="FMODUnity">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\FMODUnity.dll</HintPath>
+		</Reference>
+		<Reference Include="FMODUnityResonance">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\FMODUnityResonance.dll</HintPath>
+		</Reference>
+		<Reference Include="Game">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Game.dll</HintPath>
+		</Reference>
+		<Reference Include="HalFloat">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\HalFloat.dll</HintPath>
+		</Reference>
+		<Reference Include="HawkNetworking">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\HawkNetworking.dll</HintPath>
+		</Reference>
+		<Reference Include="HawkNetworkingPlugins">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\HawkNetworkingPlugins.dll</HintPath>
+		</Reference>
+		<Reference Include="HideAndSeek">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\HideAndSeek.dll</HintPath>
+		</Reference>
+		<Reference Include="IngameDebugConsole.Runtime">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\IngameDebugConsole.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="MeshCombine">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\MeshCombine.dll</HintPath>
+		</Reference>
+		<Reference Include="MeshExtension">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\MeshExtension.dll</HintPath>
+		</Reference>
+		<Reference Include="ModWobblyLife">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\ModWobblyLife.dll</HintPath>
+		</Reference>
+		<Reference Include="NavMeshComponents">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NavMeshComponents.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.Common.AssetInfo">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.Common.AssetInfo.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.Common.CoM">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.Common.CoM.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.Common.FloatingOrigin">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.Common.FloatingOrigin.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.Common.NUI">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.Common.NUI.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.Common.Utility">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.Common.Utility.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.Common.Vehicle">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.Common.Vehicle.dll</HintPath>
+		</Reference>
+		<Reference Include="NWH.DWP2">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\NWH.DWP2.dll</HintPath>
+		</Reference>
+		<Reference Include="QuatCompress">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\QuatCompress.dll</HintPath>
+		</Reference>
+		<Reference Include="Rewired_Core">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Rewired_Core.dll</HintPath>
+		</Reference>
+		<Reference Include="Rewired_Windows">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Rewired_Windows.dll</HintPath>
+		</Reference>
+		<Reference Include="RuntimeInspector.Runtime">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\RuntimeInspector.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Sandbox">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Sandbox.dll</HintPath>
+		</Reference>
+		<Reference Include="SimpleFileBrowser.Runtime">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\SimpleFileBrowser.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="SimpleLUT">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\SimpleLUT.dll</HintPath>
+		</Reference>
+		<Reference Include="SingularityGroup.HotReload.Runtime">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\SingularityGroup.HotReload.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="SingularityGroup.HotReload.Runtime.Public">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\SingularityGroup.HotReload.Runtime.Public.dll</HintPath>
+		</Reference>
+		<Reference Include="Space">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Space.dll</HintPath>
+		</Reference>
+		<Reference Include="TechniePhysicsCreator">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\TechniePhysicsCreator.dll</HintPath>
+		</Reference>
+		<Reference Include="TrashMan">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\TrashMan.dll</HintPath>
+		</Reference>
+		<Reference Include="Trivial.CodeSecurity">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Trivial.CodeSecurity.dll</HintPath>
+		</Reference>
+		<Reference Include="Trivial.Mono.Cecil">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Trivial.Mono.Cecil.dll</HintPath>
+		</Reference>
+		<Reference Include="Trivial.Mono.Cecil.Mdb">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Trivial.Mono.Cecil.Mdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Trivial.Mono.Cecil.Pdb">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Trivial.Mono.Cecil.Pdb.dll</HintPath>
+		</Reference>
+		<Reference Include="UMod-Interface">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UMod-Interface.dll</HintPath>
+		</Reference>
+		<Reference Include="UMod-ModTools">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UMod-ModTools.dll</HintPath>
+		</Reference>
+		<Reference Include="UMod-Shared">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UMod-Shared.dll</HintPath>
+		</Reference>
+		<Reference Include="UMod">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UMod.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Addressables">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Addressables.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Animation.Rigging">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Animation.Rigging.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst.Cecil">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Burst.Cecil.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst.Cecil.Mdb">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Burst.Cecil.Mdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst.Cecil.Pdb">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Burst.Cecil.Pdb.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst.Cecil.Rocks">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Burst.Cecil.Rocks.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Burst.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Burst.Unsafe">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Burst.Unsafe.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Collections">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Collections.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Collections.LowLevel.ILSupport">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.InternalAPIEngineBridge.013">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.InternalAPIEngineBridge.013.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Jobs">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Jobs.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Localization">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Localization.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Mathematics">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Mathematics.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.MemoryProfiler">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.MemoryProfiler.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Postprocessing.Runtime">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Postprocessing.Runtime.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ProBuilder.Csg">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ProBuilder.Csg.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ProBuilder">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ProBuilder.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ProBuilder.KdTree">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ProBuilder.KdTree.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ProBuilder.Poly2Tri">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ProBuilder.Poly2Tri.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ProBuilder.Stl">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ProBuilder.Stl.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ResourceManager">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ResourceManager.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.ScriptableBuildPipeline">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.ScriptableBuildPipeline.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.TextMeshPro">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+		</Reference>
+		<Reference Include="Unity.Timeline">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Unity.Timeline.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AccessibilityModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AIModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AndroidJNIModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AnimationModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ARModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ARModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AssetBundleModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.AudioModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ClothModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ClusterInputModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ClusterRendererModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CrashReportingModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.DirectorModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.DSPGraphModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GameCenterModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GIModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.GIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.GridModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.HotReloadModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ImageConversionModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.IMGUIModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputLegacyModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.InputModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.JSONSerializeModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.LocalizationModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ParticleSystemModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PerformanceReportingModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.Physics2DModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.PhysicsModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ProfilerModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.ScreenCaptureModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SharedInternalsModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SpriteMaskModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SpriteShapeModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.StreamingModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SubstanceModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.SubsystemsModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TerrainModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TerrainPhysicsModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextCoreModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TilemapModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TLSModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UI">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UI.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIElementsModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIElementsNativeModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UIElementsNativeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UIModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UmbraModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UNETModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityAnalyticsModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityConnectModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityCurlModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityCurlModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityTestProtocolModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestAudioModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestTextureModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.UnityWebRequestWWWModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VehiclesModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VFXModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VideoModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VirtualTexturingModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.VirtualTexturingModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.VRModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.WindModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.XRModule">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\UnityEngine.XRModule.dll</HintPath>
+		</Reference>
+		<Reference Include="Utils">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\Utils.dll</HintPath>
+		</Reference>
+		<Reference Include="VacuumShaders.TerrainToMesh">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VacuumShaders.TerrainToMesh.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Memory">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Memory.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Nature">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Nature.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Packages">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Packages.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Pooling">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Pooling.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Rendering">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Rendering.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Rendering.Nature">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Rendering.Nature.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.ShaderX">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.ShaderX.dll</HintPath>
+		</Reference>
+		<Reference Include="VisualDesignCafe.Threading">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\VisualDesignCafe.Threading.dll</HintPath>
+		</Reference>
+		<Reference Include="WobblyRun">
+			<HintPath>$(GamePath)/Wobbly Life_Data\Managed\WobblyRun.dll</HintPath>
+		</Reference>
+		<Reference Include="MelonLoader">
+			<HintPath>$(GamePath)/MelonLoader\net35\MelonLoader.dll</HintPath>
+		</Reference>
+		<Reference Include="0Harmony">
+			<HintPath>$(GamePath)/MelonLoader\net35\0Harmony.dll</HintPath>
+		</Reference>
+
+	</ItemGroup>
+
+	<PropertyGroup>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="Core.cs" />
+		<Compile Include="Element.cs" />
+		<Compile Include="Function.cs" />
+		<Compile Include="ModderPlayer.cs" />
+		<Compile Include="ModderPlayerMods.cs" />
+		<Compile Include="Page.cs" />
+		<Content Include="Directory.Build.props" />
+	</ItemGroup>
+	
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="COPY &quot;$(TargetPath)&quot; &quot;$(GamePath)/Mods&quot;" />
+	</Target>
+</Project>
