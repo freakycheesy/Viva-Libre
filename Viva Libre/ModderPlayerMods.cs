@@ -8,11 +8,29 @@ namespace Viva_Libre
         {
             Page movementMods = new("Movement Mods", this, [new Function("No Clip", NoClip)]);
             Page playerMods = new("Player Mods", this, [movementMods, new Function("Respawn", Respawn), new Function("Smite Player", SmitePlayer), new Function("Teleport All Character", TeleportAllCharacters)]);
-            Page weatherMods = new("Weather Mods", this, []);
+            Page timeMods = new("Time Mods", this, [new Function("Morning", SetMorning), new Function("Midday", SetMidday), new Function("Evening", SetEvening), new Function("Midnight", SetMidnight)]);
+            Page weatherMods = new("Weather Mods", this, [timeMods]);
             Page serverMods = new("Server Mods", this, [new Function("Low Gravity", LowGravity), new Function("Ragdoll All Players", RagdollAllPlayers), new Function("Respawn All Players", RespawnAllPlayers), weatherMods]);
             Page saveFileMods = new("Save File Mods", this, []);
             defaultPage = new("Main", this, [playerMods, serverMods, saveFileMods, new Function("null", null)]);
             currentPage = defaultPage;
+        }
+        private void SetEvening()
+        {
+            DayNightCycle.Instance.SetEvening();
+        }
+        private void SetMidnight()
+        {
+            DayNightCycle.Instance.SetMidnight();
+        }
+        private void SetMidday()
+        {
+            DayNightCycle.Instance.SetMidday();
+        }
+
+        private void SetMorning()
+        {
+            DayNightCycle.Instance.SetMorning();
         }
 
         private void RespawnAllPlayers()

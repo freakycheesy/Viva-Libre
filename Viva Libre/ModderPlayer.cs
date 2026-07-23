@@ -82,23 +82,30 @@ namespace Viva_Libre
         public void OnGUI()
         {
             if (!modMenuEnabled) return;
-            GUILayout.Box($"Mod Menu for {controller.GetPlayerName()}");
-            GUILayout.Button($"Current Page: {currentPage.name}");
-            if (GUILayout.Button($"Square: {currentPage.elements[0].name}"))
+            try
             {
-                currentPage.elements[0].Execute();
+                GUILayout.Box($"Mod Menu for {controller.GetPlayerName()}");
+                GUILayout.Button($"Current Page: {currentPage.name}");
+                if (GUILayout.Button($"Square: {currentPage.elements[0].name}"))
+                {
+                    currentPage.elements[0].Execute();
+                }
+                if (GUILayout.Button($"Triangle: {currentPage.elements[1].name}"))
+                {
+                    currentPage.elements[1].Execute();
+                }
+                if (GUILayout.Button($"Circle: {currentPage.elements[2].name}"))
+                {
+                    currentPage.elements[2].Execute();
+                }
+                if (GUILayout.Button($"Cross: {currentPage.elements[3].name}"))
+                {
+                    currentPage.elements[3].Execute();
+                }
             }
-            if (GUILayout.Button($"Triangle: {currentPage.elements[1].name}"))
+            catch
             {
-                currentPage.elements[1].Execute();
-            }
-            if (GUILayout.Button($"Circle: {currentPage.elements[2].name}"))
-            {
-                currentPage.elements[2].Execute();
-            }
-            if (GUILayout.Button($"Cross: {currentPage.elements[3].name}"))
-            {
-                currentPage.elements[3].Execute();
+                // Prob missing elements
             }
             if (GUILayout.Button("Dump Rewired Actions"))
             {
