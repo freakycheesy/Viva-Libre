@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using HawkNetworking;
+using MelonLoader;
 using MelonLoader.Utils;
 using Newtonsoft.Json;
 using Rewired;
@@ -8,26 +9,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Viva_Libre
 {
     public partial class ModderPlayer
     {
         private bool _modMenuEnabled = false;
-        public bool modMenuEnabled { get => _modMenuEnabled; set
+        public bool modMenuEnabled
+        {
+            get => _modMenuEnabled; set
             {
                 _modMenuEnabled = value;
                 currentPage = defaultPage;
-                if (modMenuEnabled) inputManager.DisableGameplayInput(this);
-                else inputManager.EnableGameplayInput(this);
-            } 
+                if (modMenuEnabled) DisableInput();
+                else EnableInput();
+            }
         }
         public Page defaultPage;
-        public Page currentPage;
+        public Page currentPage { get; set; }
+        public PlayerController myController;
         public PlayerController controller;
         public PlayerCharacter character => controller.GetPlayerCharacter();
-        public PlayerControllerInputManager inputManager => controller.GetPlayerControllerInputManager();
-        public Rewired.Player rewiredPlayer => inputManager.GetRewiredPlayer();
+        public PlayerControllerInputManager myInputManager => myController.GetPlayerControllerInputManager();
+        public Rewired.Player myRewiredPlayer => myInputManager.GetRewiredPlayer();
+        public void DisableInput()
+        {
+            myInputManager.DisableGameplayInput(this, false);
+        }
+        public void EnableInput()
+        {
+            myInputManager.EnableGameplayInput(this);
+        }
         public void Start()
         {
             modMenuEnabled = false;
@@ -35,13 +48,13 @@ namespace Viva_Libre
         }
         public void Stop()
         {
-            inputManager.EnableGameplayInput(this);
+            myInputManager.EnableGameplayInput(this);
         }
 
         public void Update()
         {
-            if (rewiredPlayer.GetButtonDown("Horn"))
-            {   
+            if (myRewiredPlayer.GetButtonDown("Horn"))
+            {
                 if (currentPage.previousPage != null)
                 {
                     currentPage = currentPage.previousPage;
@@ -49,6 +62,7 @@ namespace Viva_Libre
                 }
                 else
                 {
+                    controller = myController;
                     modMenuEnabled = !modMenuEnabled;
                     MelonLogger.Msg($"ModMenu {modMenuEnabled}");
                 }
@@ -61,21 +75,21 @@ namespace Viva_Libre
 
         private void ModMenuUpdate()
         {
-            if (rewiredPlayer.GetButtonDown("Ragdoll"))
+            if (myRewiredPlayer.GetButtonDown("Ragdoll"))
             {
-                currentPage.elements[0].Execute();
+                currentPage?.elements[0]?.Execute();
             }
-            if (rewiredPlayer.GetButtonDown("ActionEnterExitInteract"))
+            if (myRewiredPlayer.GetButtonDown("ActionEnterExitInteract"))
             {
-                currentPage.elements[1].Execute();
+                currentPage?.elements[1]?.Execute();
             }
-            if (rewiredPlayer.GetButtonDown("VehicleBoost"))
+            if (myRewiredPlayer.GetButtonDown("VehicleBoost"))
             {
-                currentPage.elements[2].Execute();
+                currentPage?.elements[2]?.Execute();
             }
-            if (rewiredPlayer.GetButtonDown("Jump"))
+            if (myRewiredPlayer.GetButtonDown("Jump"))
             {
-                currentPage.elements[3].Execute();
+                currentPage?.elements[3]?.Execute();
             }
         }
 
@@ -84,23 +98,35 @@ namespace Viva_Libre
             if (!modMenuEnabled) return;
             try
             {
-                GUILayout.Box($"Mod Menu for {controller.GetPlayerName()}");
+                GUILayout.Box($"Mod Menu for {myController.GetPlayerName()}");
+                GUILayout.Box($"Selected Player: {controller.GetPlayerName()}");
                 GUILayout.Button($"Current Page: {currentPage.name}");
-                if (GUILayout.Button($"Square: {currentPage.elements[0].name}"))
+                if (currentPage.elements.Length > 0)
                 {
-                    currentPage.elements[0].Execute();
+                    if (GUILayout.Button($"Square: {currentPage.elements[0].name}"))
+                    {
+                        currentPage?.elements[0]?.Execute();
+                    }
                 }
-                if (GUILayout.Button($"Triangle: {currentPage.elements[1].name}"))
+                if (currentPage.elements.Length > 1)
                 {
-                    currentPage.elements[1].Execute();
+                    if (GUILayout.Button($"Triangle: {currentPage.elements[1].name}"))
+                    {
+                        currentPage?.elements[1]?.Execute();
+                    }
                 }
-                if (GUILayout.Button($"Circle: {currentPage.elements[2].name}"))
+                if (currentPage.elements.Length > 2)
                 {
-                    currentPage.elements[2].Execute();
+                    if (GUILayout.Button($"Circle: {currentPage.elements[2].name}"))
+                    {
+                        currentPage?.elements[2]?.Execute();
+                    }
                 }
-                if (GUILayout.Button($"Cross: {currentPage.elements[3].name}"))
-                {
-                    currentPage.elements[3].Execute();
+                if (currentPage.elements.Length > 3) { 
+                    if (GUILayout.Button($"Cross: {currentPage.elements[3].name}"))
+                    {
+                        currentPage?.elements[3]?.Execute();
+                    }
                 }
             }
             catch
@@ -111,6 +137,13 @@ namespace Viva_Libre
             {
                 File.WriteAllText(Path.Combine(Application.dataPath, "inputdump.txt"), JsonConvert.SerializeObject(ReInput.mapping));
                 GUILayout.Box($"Dumped to {Path.Combine(Application.dataPath, "inputdump.txt")}");
+            }
+            if (GUILayout.Button("Dump Network Prefabs"))
+            {
+                var field = typeof(HawkNetworkManager).GetField("registeredNetworkBehavioursDic", System.Reflection.BindingFlags.NonPublic);
+                Dictionary<Guid, AssetReference> dic = field.GetValue(HawkNetworkManager.DefaultInstance);
+                File.WriteAllText(Path.Combine(Application.dataPath, "registeredprefabs.txt"), JsonConvert.SerializeObject(dic));
+                GUILayout.Box($"Dumped to {Path.Combine(Application.dataPath, "registeredprefabs.txt")}");
             }
         }
     }

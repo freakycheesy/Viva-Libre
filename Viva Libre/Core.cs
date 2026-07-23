@@ -33,6 +33,7 @@ namespace Viva_Libre
             {
                 ModderPlayer player = new()
                 {
+                    myController = playerController,
                     controller = playerController,
                 };
                 player.Start();
