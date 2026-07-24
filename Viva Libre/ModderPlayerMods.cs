@@ -1,29 +1,144 @@
-﻿using ModWobblyLife;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Viva_Libre
 {
     public partial class ModderPlayer
     {
+        // Player Mods
+        Page speedMods;
+        Page movementMods;
+        Page playerMods;
+        // Server Mods
+        Page timeMods;
+        Page weatherMods;
+        Page serverMods;
+        // Gameplay Mods
+        Page gameplayMods;
+        // Client Mods
+        Page rewardsUnlocker; 
+        Page rewardsLocker;
+
+        Page unlockableManager;
+        Page saveFileMods;
+        Page clientMods;
+        // Prop Spawner
+        Page propSpawner;
+        // Default Page
         private void ModsSetup()
         {
             // Player Mods
-            Page movementMods = new("Movement Mods", this, [new Function("No Clip", NoClip)]);
-            Page playerMods = new("Player Mods", this, [movementMods, new Function("Respawn", Respawn), new Function("Smite Player", SmitePlayer), new Function("Teleport All Character", TeleportAllCharacters)]);
+            speedMods = new("Speed Mods", this, [new Function("Increase Speed", IncreaseSpeed), new Function("Decrease Speed", DecreaseSpeed), new Function("Increase Jump", IncreaseJump), new Function("Decrease Jump", DecreaseJump)]);
+            movementMods = new("Movement Mods", this, [new Function("No Clip", NoClip), new Function("Reset", ResetMovement), speedMods]);
+            playerMods = new("Player Mods", this, [movementMods, new Function("Respawn", Respawn), new Function("Smite Player", SmitePlayer), new Function("Teleport All Character", TeleportAllCharacters)]);
             // Server Mods
-            Page timeMods = new("Time Mods", this, [new Function("Morning", SetMorning), new Function("Midday", SetMidday), new Function("Evening", SetEvening), new Function("Midnight", SetMidnight)]);
-            Page weatherMods = new("Weather Mods", this, [timeMods]);
-            Page serverMods = new("Server Mods", this, [new Function("Low Gravity", LowGravity), new Function("Ragdoll All Players", RagdollAllPlayers), new Function("Respawn All Players", RespawnAllPlayers), weatherMods]);
+            timeMods = new("Time Mods", this, [new Function("Morning", SetMorning), new Function("Midday", SetMidday), new Function("Evening", SetEvening), new Function("Midnight", SetMidnight)]);
+            weatherMods = new("Weather Mods", this, [timeMods]);
+            serverMods = new("Server Mods", this, [new Function("Low Gravity", LowGravity), new Function("Ragdoll All Players", RagdollAllPlayers), new Function("Respawn All Players", RespawnAllPlayers), weatherMods]);
             // Gameplay Mods
-            Page gameplayMods = new("Gameplay Mods", this, [playerMods, serverMods, new Function("null", null), new Function("null", null)]);
-           // Client Mods
-            Page saveFileMods = new("Save File Mods", this, []);
-            Page clientMods = new("Client Mods", this, [saveFileMods]);
+            gameplayMods = new("Gameplay Mods", this, [playerMods, serverMods, new Function("null", null), new Function("null", null)]);
+            // Client Mods
+            rewardsUnlocker = new("Rewards Unlocker", this, [new Function("Unlock All Vehicles", UnlockAllVehicles), new Function("Unlock All Outfits", UnlockAllOutfits), new Function("Unlock All Achievements", UnlockAllAchievements)]);
+            rewardsLocker = new("Rewards Locker", this, [new Function("Lock All Vehicles", LockAllVehicles), new Function("Lock All Outfits", LockAllOutfits), new Function("Lock All Achievements", LockAllAchievements)]);
+            unlockableManager = new("Unlockable Manager", this, [rewardsUnlocker, rewardsLocker]);
+            saveFileMods = new("Save File Mods", this, [unlockableManager]);
+            clientMods = new("Client Mods", this, [saveFileMods]);
             // Prop Spawner
-            Page propSpawner = new("Prop Spawner", this, null);
+            propSpawner = new("Prop Spawner", this, [new Function("Toggle", ToggleSandbox)]);
             // Default Page
             defaultPage = new("Main", this, [gameplayMods, clientMods, propSpawner, new Function("Switch Player", NextPlayer)]);
             currentPage = defaultPage;
+        }
+
+        private void ToggleSandbox()
+        {
+            myController.GetModPlayerController().ServerSetSandboxUIEnabled(true);
+            ModdablePlayerController.FindObjectOfType<ModdablePlayerController>().ServerSetSandboxUIEnabled(true);
+        }
+
+        private void DecreaseJump()
+        {
+            var move = character.GetPlayerCharacterMovement();
+            move.SetJumpMultiplier(move.GetJumpMultiplier() - 1);
+        }
+
+        private void IncreaseJump()
+        {
+            var move = character.GetPlayerCharacterMovement();
+            move.SetJumpMultiplier(move.GetJumpMultiplier() + 1);
+        }
+
+        private void DecreaseSpeed()
+        {
+            var move = character.GetPlayerCharacterMovement();
+            move.SetSpeedMultiplier(move.GetSpeedMultiplier() - 1);
+        }
+
+        private void IncreaseSpeed()
+        {
+            var move = character.GetPlayerCharacterMovement();
+            move.SetSpeedMultiplier(move.GetSpeedMultiplier()+1);
+        }
+
+        private void ResetMovement()
+        {
+            character.GetPlayerCharacterMovement().SetNoClipEnabled(false);
+            character.GetPlayerCharacterMovement().SetSpeedMultiplier(1);
+            character.GetPlayerCharacterMovement().SetJumpMultiplier(1);
+        }
+
+        private void UnlockAllAchievements()
+        {
+            var achievements = (WobblyAchievement[])Enum.GetValues(typeof(WobblyAchievement));
+
+            foreach (var item in achievements)
+            {
+                AchievementManager.Instance.UnlockAchievement(item, myController);
+            }
+        }
+        private void LockAllAchievements()
+        {
+            var achievements = (WobblyAchievement[])Enum.GetValues(typeof(WobblyAchievement));
+
+            foreach (var item in achievements)
+            {
+                AchievementManager.Instance.LockAchievement(item, myController);
+            }
+        }
+        private void LockAllVehicles()
+        {
+            myController.GetPlayerPersistentData().VehiclesData.Vehicles.Clear();
+            //VehicleManager.Instance.GetVehicles().ForEach(x => myController.GetPlayerPersistentData().VehiclesData.LockVehicle(new() { guidStr = x.GetAssetIdRaw(), vehicleGuid = x.GetAssetId() }));
+        }
+
+        private void UnlockAllVehicles()
+        {
+            VehicleManager.Instance.GetVehicles().ForEach(myController.GetPlayerPersistentData().VehiclesData.UnlockVehicle);     
+        }
+
+        private void UnlockOutfit(ClothingAssetReference reference)
+        {
+            myController.GetPlayerControllerUnlocker().UnlockClothing(this, reference);
+        }
+        private void LockOutfit(ClothingAssetReference reference)
+        {
+            myController.GetPlayerControllerUnlocker().LockClothing(reference);
+        }
+
+        private void UnlockAllOutfits()
+        {
+            var clothes = ClothingManager.Instance.GetAllClothingReferences();
+            foreach (var item in clothes)
+            {
+                UnlockOutfit(item);
+            }
+        }
+        private void LockAllOutfits()
+        {
+            var clothes = ClothingManager.Instance.GetAllClothingReferences();
+            foreach (var item in clothes)
+            {
+                LockOutfit(item);
+            }
         }
 
         public int selectedPlayer = 0;
@@ -31,7 +146,7 @@ namespace Viva_Libre
         {
             PlayerController[] controllers = GameInstance.Instance.GetPlayerControllers().ToArray();
             selectedPlayer++;
-            if (selectedPlayer > controllers.Length) selectedPlayer = 0;
+            if (selectedPlayer >= controllers.Length) selectedPlayer = 0;
             controller = controllers[selectedPlayer];
         }
         private void SetEvening()
@@ -64,7 +179,7 @@ namespace Viva_Libre
 
         private void TeleportAllCharacters()
         {
-            GameInstance.Instance.GetPlayerCharacters().ForEach(x=>x.SetPlayerPosition(character.GetPlayerPosition()));
+            GameInstance.Instance.GetPlayerCharacters().ForEach(x => x.SetPlayerPosition(character.GetPlayerPosition()));
         }
 
         private void NoClip()
@@ -91,7 +206,7 @@ namespace Viva_Libre
         private void LowGravity()
         {
             lowGravity = !lowGravity;
-            Physics.gravity = lowGravity?Vector3.up * -1f:Vector3.up * -10;
+            Physics.gravity = lowGravity ? Vector3.up * -1f : Vector3.up * -10;
         }
 
     }

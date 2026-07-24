@@ -23,6 +23,7 @@ namespace Viva_Libre
             if (players.ContainsKey(playerController))
             {
                 players[playerController].Stop();
+                players[playerController].Dispose();
                 players.Remove(playerController);
             }
         }
@@ -46,6 +47,13 @@ namespace Viva_Libre
             foreach (var item in players)
             {
                 item.Value.Update();
+            }
+        }
+        public override void OnLateUpdate()
+        {
+            foreach (var item in players)
+            {
+                item.Value.LateUpdate();
             }
         }
 

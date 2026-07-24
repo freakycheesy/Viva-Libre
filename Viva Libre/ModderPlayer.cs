@@ -1,19 +1,11 @@
-﻿using HawkNetworking;
-using MelonLoader;
-using MelonLoader.Utils;
+﻿using MelonLoader;
 using Newtonsoft.Json;
 using Rewired;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Viva_Libre
 {
-    public partial class ModderPlayer
+    public partial class ModderPlayer : IDisposable
     {
         private bool _modMenuEnabled = false;
         public bool modMenuEnabled
@@ -27,7 +19,13 @@ namespace Viva_Libre
             }
         }
         public Page defaultPage;
-        public Page currentPage { get; set; }
+        private Page _currentPage;
+        public Page currentPage { get => _currentPage;
+            set {
+                _currentPage = value;
+            }
+        }
+        public  int selectedElement = 0;
         public PlayerController myController;
         public PlayerController controller;
         public PlayerCharacter character => controller.GetPlayerCharacter();
@@ -50,84 +48,77 @@ namespace Viva_Libre
         {
             myInputManager.EnableGameplayInput(this);
         }
+        public void LateUpdate()
+        {
 
+        }
         public void Update()
         {
             if (myRewiredPlayer.GetButtonDown("Horn"))
             {
-                if (currentPage.previousPage != null)
-                {
-                    currentPage = currentPage.previousPage;
-                    MelonLogger.Msg($"Reverting Page");
-                }
-                else
-                {
-                    controller = myController;
-                    modMenuEnabled = !modMenuEnabled;
-                    MelonLogger.Msg($"ModMenu {modMenuEnabled}");
-                }
+                controller = myController;
+                modMenuEnabled = !modMenuEnabled;
+                MelonLogger.Msg($"ModMenu {modMenuEnabled}");
             }
             if (modMenuEnabled)
             {
                 ModMenuUpdate();
             }
         }
-
+        bool up => myRewiredPlayer.GetNegativeButtonDown("UIVertical");
+        bool down => myRewiredPlayer.GetButtonDown("UIVertical");
         private void ModMenuUpdate()
         {
-            if (myRewiredPlayer.GetButtonDown("Ragdoll"))
+            if (up)
             {
-                currentPage?.elements[0]?.Execute();
+                selectedElement++;
+                if (selectedElement >= currentPage.elements.Length) selectedElement = 0;
             }
-            if (myRewiredPlayer.GetButtonDown("ActionEnterExitInteract"))
+            else if (down)
             {
-                currentPage?.elements[1]?.Execute();
+                selectedElement--;
+                if (selectedElement < 0) selectedElement = currentPage.elements.Length - 1;
             }
-            if (myRewiredPlayer.GetButtonDown("VehicleBoost"))
+            if (myRewiredPlayer.GetButtonDown("UISubmit"))
             {
-                currentPage?.elements[2]?.Execute();
+                currentPage?.elements[selectedElement]?.Execute();
             }
-            if (myRewiredPlayer.GetButtonDown("Jump"))
+            if (myRewiredPlayer.GetButtonDown("UICancel"))
             {
-                currentPage?.elements[3]?.Execute();
+                if(currentPage.previousPage != null) currentPage = currentPage.previousPage;
+                else
+                {
+                    controller = myController;
+                    modMenuEnabled = false;
+                }
             }
         }
 
         public void OnGUI()
         {
             if (!modMenuEnabled) return;
+            if(currentPage == null)
+            {
+                GUILayout.Box("FATAL ERROR: NO PAGE FOUND");
+                return;
+            }
             try
             {
                 GUILayout.Box($"Mod Menu for {myController.GetPlayerName()}");
                 GUILayout.Box($"Selected Player: {controller.GetPlayerName()}");
                 GUILayout.Button($"Current Page: {currentPage.name}");
-                if (currentPage.elements.Length > 0)
+                for (int i = 0; i < currentPage.elements.Length; i++)
                 {
-                    if (GUILayout.Button($"Square: {currentPage.elements[0].name}"))
+                    if (currentPage.elements[i] == null) continue;
+                    var element = currentPage.elements[i];
+                    var elementName = element.name;
+                    if (selectedElement == i) elementName = $">>{elementName}<<";
+                    if (GUILayout.Button(elementName))
                     {
-                        currentPage?.elements[0]?.Execute();
+                        element?.Execute();
                     }
                 }
-                if (currentPage.elements.Length > 1)
-                {
-                    if (GUILayout.Button($"Triangle: {currentPage.elements[1].name}"))
-                    {
-                        currentPage?.elements[1]?.Execute();
-                    }
-                }
-                if (currentPage.elements.Length > 2)
-                {
-                    if (GUILayout.Button($"Circle: {currentPage.elements[2].name}"))
-                    {
-                        currentPage?.elements[2]?.Execute();
-                    }
-                }
-                if (currentPage.elements.Length > 3) { 
-                    if (GUILayout.Button($"Cross: {currentPage.elements[3].name}"))
-                    {
-                        currentPage?.elements[3]?.Execute();
-                    }
-                }
+
             }
             catch
             {
@@ -138,6 +129,7 @@ namespace Viva_Libre
                 File.WriteAllText(Path.Combine(Application.dataPath, "inputdump.txt"), JsonConvert.SerializeObject(ReInput.mapping));
                 GUILayout.Box($"Dumped to {Path.Combine(Application.dataPath, "inputdump.txt")}");
             }
+            /*
             if (GUILayout.Button("Dump Network Prefabs"))
             {
                 var field = typeof(HawkNetworkManager).GetField("registeredNetworkBehavioursDic", System.Reflection.BindingFlags.NonPublic);
@@ -145,6 +137,12 @@ namespace Viva_Libre
                 File.WriteAllText(Path.Combine(Application.dataPath, "registeredprefabs.txt"), JsonConvert.SerializeObject(dic));
                 GUILayout.Box($"Dumped to {Path.Combine(Application.dataPath, "registeredprefabs.txt")}");
             }
+            */
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }
