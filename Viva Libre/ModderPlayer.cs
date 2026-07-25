@@ -35,11 +35,27 @@ namespace Viva_Libre
         public Rewired.Player myRewiredPlayer => myInputManager.GetRewiredPlayer();
         public void DisableInput()
         {
-            myInputManager.DisableGameplayInput(this, false);
+            if (myInputManager.IsUsingMouseKeyboard())
+            {
+                myInputManager.DisableGameplayCameraInput(this);
+            }
+            else
+            {
+                myInputManager.DisableUIInput(this);
+                myInputManager.DisableInteratorInput(this);
+            }
         }
         public void EnableInput()
         {
-            myInputManager.EnableGameplayInput(this);
+            if (myInputManager.IsUsingMouseKeyboard())
+            {
+                myInputManager.EnableGameplayCameraInput(this);
+            }
+            else
+            {
+                myInputManager.EnableUIInput(this);
+                myInputManager.EnableInteratorInput(this);
+            }
         }
         public void Start()
         {
@@ -65,7 +81,8 @@ namespace Viva_Libre
                 MelonLogger.Msg($"ModMenu {modMenuEnabled}");
                 if (myInputManager.IsUsingMouseKeyboard())
                 {
-                    Cursor.lockState = CursorLockMode.None;
+                    if (modMenuEnabled) myInputManager.ShowCursor(this);
+                    else myInputManager.HideCursor(this);
                 }
             }
             if (modMenuEnabled)
@@ -76,8 +93,10 @@ namespace Viva_Libre
         }
         bool up => myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.UpArrow) : myRewiredPlayer.GetButtonDown("UIVertical");
         bool down => myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.DownArrow) : myRewiredPlayer.GetNegativeButtonDown("UIVertical");
+        private bool canNavigate => !myInputManager.IsUsingMouseKeyboard();
         private void ModMenuUpdate()
         {
+            if (!canNavigate) return;
             if (down)
             {
                 selectedElement++;
@@ -123,33 +142,34 @@ namespace Viva_Libre
             GUILayout.EndVertical();
             GUILayout.BeginVertical("hover");
             GUILayout.Box($"{myController.GetPlayerName()}'s Menu");
-            GUILayout.Box($"Victim: {myController.GetPlayerName()}");
+            GUILayout.Box($"Victim: {controller.GetPlayerName()}");
             GUILayout.EndVertical();
             GUILayout.BeginVertical("hover");
             GUILayout.Box(currentPage.name);
-            for (int j = 0; j < currentPage.elements.Length; j++)
+            for (int x = 0; x < currentPage.elements.Length; x++)
             {
-                var element = currentPage.elements[j];
-                var elementName = element.name;
-                if (selectedElement == j)
+                var element = currentPage.elements[x];
+                var elementName = selectedElement == x ? $">>{element.name}<<" : element.name;
+
+                if(selectedElement == x && canNavigate)
                 {
-                    elementName = $">>{elementName}<<";
                     if (GUILayout.Button(elementName, "hover"))
                     {
                         element?.Execute();
                     }
                 }
-                else if (GUILayout.Button(elementName))
+                else
                 {
-                    element?.Execute();
+                    if (GUILayout.Button(elementName))
+                    {
+                        element?.Execute();
+                    }
                 }
+                
             }
-            if (myInputManager.IsUsingMouseKeyboard())
+            if (GUILayout.Button("Go Back"))
             {
-                if (GUILayout.Button("Go Back"))
-                {
-                    GoBack();
-                }
+                GoBack();
             }
             GUILayout.EndVertical();
         }

@@ -152,8 +152,9 @@ namespace Viva_Libre
         private void NextPlayer()
         {
             PlayerController[] controllers = GameInstance.Instance.GetPlayerControllers().ToArray();
+
             selectedPlayer++;
-            if (selectedPlayer >= controllers.Length) selectedPlayer = 0;
+            if(selectedPlayer > controllers.Length) selectedPlayer = 0;
             controller = controllers[selectedPlayer];
         }
         private void SetEvening()
@@ -186,7 +187,7 @@ namespace Viva_Libre
 
         private void TeleportAllCharacters()
         {
-            GameInstance.Instance.GetPlayerCharacters().ForEach(x => { if (x == controller) x.SetPlayerPosition(character.GetPlayerPosition()); });
+            GameInstance.Instance.GetPlayerCharacters().ForEach(x => { if (x != controller) x.SetPlayerPosition(character.GetPlayerPosition()); });
         }
 
         private void NoClip()
@@ -214,7 +215,7 @@ namespace Viva_Libre
         {
             lowGravity = !lowGravity;
             MelonLogger.Msg($"Before: {Physics.gravity}");
-            Physics.gravity = lowGravity ? Vector3.up * -1f : Vector3.up * -10;
+            Physics.gravity = lowGravity ? Vector3.up * -1f : Vector3.up * -19.6f;
             MelonLogger.Msg($"After: {Physics.gravity}");
         }
 

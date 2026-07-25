@@ -73,6 +73,7 @@ namespace Viva_Libre
 
         private void GameInstance_onUnassignedPlayerController(PlayerController playerController)
         {
+            if (!playerController.IsLocal()) return;
             if (players.ContainsKey(playerController))
             {
                 players[playerController].Stop();
@@ -83,6 +84,7 @@ namespace Viva_Libre
 
         private void GameInstance_onAssignedPlayerController(PlayerController playerController)
         {
+            if (!playerController.IsLocal()) return;
             if (!players.ContainsKey(playerController))
             {
                 ModderPlayer player = new()
