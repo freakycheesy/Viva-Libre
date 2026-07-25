@@ -52,16 +52,20 @@ namespace Viva_Libre
         }
         public void LateUpdate()
         {
-
+            if(Cursor.lockState == CursorLockMode.Confined) Cursor.lockState = CursorLockMode.None;
         }
         public void Update()
         {
-            bool mod = myController.GetPlayerControllerInputManager().IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.F2) : myRewiredPlayer.GetButtonDown("Horn");
+            bool mod = myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.F2) : myRewiredPlayer.GetButtonDown("Horn");
             if (mod)
             {
                 controller = myController;
                 modMenuEnabled = !modMenuEnabled;
                 MelonLogger.Msg($"ModMenu {modMenuEnabled}");
+                if (myInputManager.IsUsingMouseKeyboard())
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
             }
             if (modMenuEnabled)
             {
@@ -88,28 +92,39 @@ namespace Viva_Libre
             }
             if (myRewiredPlayer.GetButtonDown("UICancel"))
             {
-                if(currentPage.previousPage != null) currentPage = currentPage.previousPage;
-                else
-                {
-                    controller = myController;
-                    modMenuEnabled = false;
-                }
+                GoBack();
             }
         }
+
+        private void GoBack()
+        {
+            if (currentPage.previousPage != null) currentPage = currentPage.previousPage;
+            else
+            {
+                controller = myController;
+                modMenuEnabled = false;
+            }
+        }
+
         public void OnCustomGUI()
         {
             if (!modMenuEnabled) return;
             GUI.skin = Core.CustomSkin;
-            GUILayout.Box(Core.CustomLogo);
+            GUILayout.BeginVertical("hover");
+            GUILayout.Box(Core.CustomLogo, "logo");
             OnGUI();
         }
         private void OnGUI()
         {
             if (!modMenuEnabled) return;
-            GUILayout.Box($"Viva Libre Mod Menu - {Core.link}");
-            GUILayout.Box($"Mod Menu for {myController.GetPlayerName()}");
-            GUILayout.Box(currentPage.name);
+            GUILayout.Box($"{Core.link}", "hover");
+            GUILayout.EndVertical();
             GUILayout.BeginVertical("hover");
+            GUILayout.Box($"{myController.GetPlayerName()}'s Menu");
+            GUILayout.Box($"Victim: {myController.GetPlayerName()}");
+            GUILayout.EndVertical();
+            GUILayout.BeginVertical("hover");
+            GUILayout.Box(currentPage.name);
             for (int j = 0; j < currentPage.elements.Length; j++)
             {
                 var element = currentPage.elements[j];
@@ -127,11 +142,20 @@ namespace Viva_Libre
                     element?.Execute();
                 }
             }
+            if (myInputManager.IsUsingMouseKeyboard())
+            {
+                if (GUILayout.Button("Go Back"))
+                {
+                    GoBack();
+                }
+            }
             GUILayout.EndVertical();
         }
         public void OnUnityGUI()
         {
             if (!modMenuEnabled) return;
+            GUILayout.BeginVertical("hover");
+            GUILayout.Box("Viva Libre\nMod Menu", "logo");
             OnGUI();
             if (GUILayout.Button("Dump Rewired Actions"))
             {

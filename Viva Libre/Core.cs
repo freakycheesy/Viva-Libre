@@ -28,12 +28,12 @@ namespace Viva_Libre
         public static Texture2D CustomLogo;
         private void LoadVivaAssetBundle()
         {
-            string path = Path.Combine(MelonEnvironment.UserLibsDirectory, "viva");
+            string path = Path.Combine(MelonEnvironment.UserLibsDirectory, "cheesy", "viva");
             bool exists = System.IO.File.Exists(path);
             if (!exists)
             {
                 UIType = UIType.Unity;
-                LoggerInstance.Error("could not find viva.bundle, falling back to unity imgui");
+                LoggerInstance.Error($"could not find {path}, falling back to unity imgui");
             }
             else
             {

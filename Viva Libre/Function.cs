@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,14 @@ namespace Viva_Libre
         }
         public override void Execute()
         {
-            command?.Invoke();
+            try
+            {
+                command?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                MelonLogger.Error(ex);
+            }
         }
     }
 }

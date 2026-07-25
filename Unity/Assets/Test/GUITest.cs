@@ -29,7 +29,7 @@ public class GUITest : MonoBehaviour
     void OnGUI()
     {
         GUI.skin = skin;
-        GUILayout.Box(logo);
+        GUILayout.Box(logo, "logo");
         GUILayout.Box("Mod Menu for Testing");
         GUILayout.BeginVertical("hover");
         for (int j = 0; j < elements.Length; j++)

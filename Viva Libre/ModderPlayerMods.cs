@@ -46,7 +46,7 @@ namespace Viva_Libre
             // Prop Spawner
             propSpawner = new("Prop Spawner", this, [new Function("Toggle", ToggleSandbox)]);
             // Default Page
-            defaultPage = new("Main", this, [gameplayMods, clientMods, propSpawner, new Function("Switch Player", NextPlayer)]);
+            defaultPage = new("Main", this, [gameplayMods, clientMods, propSpawner, new Function("Swap Victim", NextPlayer)]);
             currentPage = defaultPage;
         }
 
@@ -180,7 +180,7 @@ namespace Viva_Libre
 
         private void TeleportAllCharacters()
         {
-            GameInstance.Instance.GetPlayerCharacters().ForEach(x => x.SetPlayerPosition(character.GetPlayerPosition()));
+            GameInstance.Instance.GetPlayerCharacters().ForEach(x => { if (x == controller) x.SetPlayerPosition(character.GetPlayerPosition()); });
         }
 
         private void NoClip()

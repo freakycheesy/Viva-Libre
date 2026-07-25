@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,13 @@ namespace Viva_Libre
                 previousPage = player.currentPage;
                 player.currentPage = this;
             }
-            onOpen?.Invoke();
+            try
+            {
+                onOpen?.Invoke();
+            }
+            catch (Exception ex) {
+                MelonLogger.Error(ex);
+            }
         }
     }
 }
