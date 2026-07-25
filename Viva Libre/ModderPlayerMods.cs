@@ -34,7 +34,7 @@ namespace Viva_Libre
             // Server Mods
             timeMods = new("Time Mods", this, [new Function("Morning", SetMorning), new Function("Midday", SetMidday), new Function("Evening", SetEvening), new Function("Midnight", SetMidnight)]);
             weatherMods = new("Weather Mods", this, [timeMods]);
-            serverMods = new("Server Mods", this, [new Function("Low Gravity", LowGravity), new Function("Ragdoll All Players", RagdollAllPlayers), new Function("Respawn All Players", RespawnAllPlayers), weatherMods]);
+            serverMods = new("Server Mods", this, [new Function("Toggle Low Gravity", LowGravity), new Function("Ragdoll All Players", RagdollAllPlayers), new Function("Respawn All Players", RespawnAllPlayers), weatherMods]);
             // Gameplay Mods
             gameplayMods = new("Gameplay Mods", this, [playerMods, serverMods, new Function("null", null), new Function("null", null)]);
             // Client Mods
@@ -42,12 +42,18 @@ namespace Viva_Libre
             rewardsLocker = new("Rewards Locker", this, [new Function("Lock All Vehicles", LockAllVehicles), new Function("Lock All Outfits", LockAllOutfits), new Function("Lock All Achievements", LockAllAchievements)]);
             unlockableManager = new("Unlockable Manager", this, [rewardsUnlocker, rewardsLocker]);
             saveFileMods = new("Save File Mods", this, [unlockableManager]);
-            clientMods = new("Client Mods", this, [saveFileMods]);
+            clientMods = new("Client Mods", this, [saveFileMods, new Function("Toggle First Person", ToggleFirstPerson)]);
             // Prop Spawner
             propSpawner = new("Prop Spawner", this, [new Function("Toggle", ToggleSandbox)]);
             // Default Page
             defaultPage = new("Main", this, [gameplayMods, clientMods, propSpawner, new Function("Swap Victim", NextPlayer)]);
             currentPage = defaultPage;
+        }
+
+        FirstPerson firstPerson;
+        private void ToggleFirstPerson()
+        {
+            firstPerson.firstPersonEnabled = !firstPerson.firstPersonEnabled;
         }
 
         private void ToggleSandbox()
@@ -212,5 +218,14 @@ namespace Viva_Libre
             MelonLogger.Msg($"After: {Physics.gravity}");
         }
 
+
+        private void ModUpdate()
+        {
+            if (firstPerson == null)
+            {
+                firstPerson = new() { player = this };
+                firstPerson.OnEnable();
+            }
+        }
     }
 }

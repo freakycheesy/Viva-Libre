@@ -14,12 +14,15 @@ namespace Viva_Libre
     }
     public class Core : MelonMod
     {
+        public static Core Instance { get; private set; }
         public static Dictionary<PlayerController, ModderPlayer> players = new();
         public static UIType UIType { get; private set; }
         public static string link => "https://github.com/freakycheesy/Viva-Libre.git";
         public override void OnInitializeMelon()
         {
+            Instance = this;
             LoggerInstance.Msg("Initialized.");
+            HarmonyInstance.PatchAll();
             LoadVivaAssetBundle();
             GameInstance.onAssignedPlayerController += GameInstance_onAssignedPlayerController;
             GameInstance.onUnassignedPlayerController += GameInstance_onUnassignedPlayerController;

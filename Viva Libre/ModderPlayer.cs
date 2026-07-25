@@ -49,6 +49,7 @@ namespace Viva_Libre
         public void Stop()
         {
             myInputManager.EnableGameplayInput(this);
+            firstPerson.OnDisable();
         }
         public void LateUpdate()
         {
@@ -71,26 +72,27 @@ namespace Viva_Libre
             {
                 ModMenuUpdate();
             }
+            ModUpdate();
         }
-        bool up => myRewiredPlayer.GetNegativeButtonDown("UIVertical");
-        bool down => myRewiredPlayer.GetButtonDown("UIVertical");
+        bool up => myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.UpArrow) : myRewiredPlayer.GetButtonDown("UIVertical");
+        bool down => myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.DownArrow) : myRewiredPlayer.GetNegativeButtonDown("UIVertical");
         private void ModMenuUpdate()
         {
-            if (up)
+            if (down)
             {
                 selectedElement++;
                 if (selectedElement >= currentPage.elements.Length) selectedElement = 0;
             }
-            else if (down)
+            else if (up)
             {
                 selectedElement--;
                 if (selectedElement < 0) selectedElement = currentPage.elements.Length - 1;
             }
-            if (myRewiredPlayer.GetButtonDown("UISubmit"))
+            if (myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.Return) : myRewiredPlayer.GetButtonDown("UISubmit"))
             {
                 currentPage?.elements[selectedElement]?.Execute();
             }
-            if (myRewiredPlayer.GetButtonDown("UICancel"))
+            if (myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.Backspace) : myRewiredPlayer.GetButtonDown("UICancel"))
             {
                 GoBack();
             }
