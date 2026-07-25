@@ -8,6 +8,7 @@ Made for [MelonLoader](https://melonwiki.xyz/#/)/[LemonLoader](https://melonwiki
 - Client Mods (modify your own client and save files)
 - Prop Spawner (doesnt work)
 
-
+# Credits
+- [lstwoMods](https://lstwomods.github.io/) (viva libre is a simple, easy to use, cross-platform port of lstwoMods)
 
 *Currently supports the steam version of wobbly life (if you wanna help out on any version regardless of modding expirence or not, dm me on discord @freakycheesy)
