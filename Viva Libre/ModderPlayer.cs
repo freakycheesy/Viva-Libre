@@ -1,6 +1,8 @@
 ﻿using MelonLoader;
+using MelonLoader.TinyJSON;
 using Newtonsoft.Json;
 using Rewired;
+using SingularityGroup.HotReload;
 using UnityEngine;
 
 namespace Viva_Libre
@@ -54,7 +56,8 @@ namespace Viva_Libre
         }
         public void Update()
         {
-            if (myRewiredPlayer.GetButtonDown("Horn"))
+            bool mod = myController.GetPlayerControllerInputManager().IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.F2) : myRewiredPlayer.GetButtonDown("Horn");
+            if (mod)
             {
                 controller = myController;
                 modMenuEnabled = !modMenuEnabled;
@@ -93,37 +96,43 @@ namespace Viva_Libre
                 }
             }
         }
-
-        public void OnGUI()
+        public void OnCustomGUI()
         {
             if (!modMenuEnabled) return;
-            if(currentPage == null)
+            GUI.skin = Core.CustomSkin;
+            GUILayout.Box(Core.CustomLogo);
+            OnGUI();
+        }
+        private void OnGUI()
+        {
+            if (!modMenuEnabled) return;
+            GUILayout.Box($"Viva Libre Mod Menu - {Core.link}");
+            GUILayout.Box($"Mod Menu for {myController.GetPlayerName()}");
+            GUILayout.Box(currentPage.name);
+            GUILayout.BeginVertical("hover");
+            for (int j = 0; j < currentPage.elements.Length; j++)
             {
-                GUILayout.Box("FATAL ERROR: NO PAGE FOUND");
-                return;
-            }
-            try
-            {
-                GUILayout.Box($"Mod Menu for {myController.GetPlayerName()}");
-                GUILayout.Box($"Selected Player: {controller.GetPlayerName()}");
-                GUILayout.Button($"Current Page: {currentPage.name}");
-                for (int i = 0; i < currentPage.elements.Length; i++)
+                var element = currentPage.elements[j];
+                var elementName = element.name;
+                if (selectedElement == j)
                 {
-                    if (currentPage.elements[i] == null) continue;
-                    var element = currentPage.elements[i];
-                    var elementName = element.name;
-                    if (selectedElement == i) elementName = $">>{elementName}<<";
-                    if (GUILayout.Button(elementName))
+                    elementName = $">>{elementName}<<";
+                    if (GUILayout.Button(elementName, "hover"))
                     {
                         element?.Execute();
                     }
                 }
-
+                else if (GUILayout.Button(elementName))
+                {
+                    element?.Execute();
+                }
             }
-            catch
-            {
-                // Prob missing elements
-            }
+            GUILayout.EndVertical();
+        }
+        public void OnUnityGUI()
+        {
+            if (!modMenuEnabled) return;
+            OnGUI();
             if (GUILayout.Button("Dump Rewired Actions"))
             {
                 File.WriteAllText(Path.Combine(Application.dataPath, "inputdump.txt"), JsonConvert.SerializeObject(ReInput.mapping));

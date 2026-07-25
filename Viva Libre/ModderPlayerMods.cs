@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MelonLoader;
+using UnityEngine;
 
 namespace Viva_Libre
 {
@@ -206,7 +207,9 @@ namespace Viva_Libre
         private void LowGravity()
         {
             lowGravity = !lowGravity;
+            MelonLogger.Msg($"Before: {Physics.gravity}");
             Physics.gravity = lowGravity ? Vector3.up * -1f : Vector3.up * -10;
+            MelonLogger.Msg($"After: {Physics.gravity}");
         }
 
     }

@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 2403001857
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: cheesy/viva
+      Dependencies: {}
