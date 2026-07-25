@@ -3,14 +3,10 @@
 # Cross-Platform* Mod Menu Project for Wobbly Life
 Made for MelonLoader/LemonLoader 0.6.5
 
-
-
-
-
-
-
-
-
+# Mods
+- Gameplay Mods (modify the player or game state)
+- Client Mods (modify your own client and save files)
+- Prop Spawner (doesnt work)
 
 
 
