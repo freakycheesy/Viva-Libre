@@ -14,4 +14,4 @@ Made for MelonLoader/LemonLoader 0.6.5
 
 
 
-*Currently support the steam version of wobbly life (if you wanna help out on any version regardless of modding expirence or not, dm me on discord @freakycheesy)
+*Currently supports the steam version of wobbly life (if you wanna help out on any version regardless of modding expirence or not, dm me on discord @freakycheesy)
