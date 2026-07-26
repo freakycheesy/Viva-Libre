@@ -4,5 +4,7 @@
     {
         public string name;
         public abstract void Execute();
+        public Action onPreGUI;
+        public Action onPostGUI;
     }
 }

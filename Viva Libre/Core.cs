@@ -20,16 +20,47 @@ namespace Viva_Libre
         public static Dictionary<GameplayCamera, ModderPlayer> freeCamPlayers = new();
         public static Dictionary<GameplayCamera, ModderPlayer> firstPersonPlayers = new();
         public static Dictionary<PlayerController, ModderPlayer> players = new();
+        public static List<CustomItemPack> CustomItemPacks { get; private set; } = new();
+
         public static UIType UIType { get; private set; }
         public static string link => "https://github.com/freakycheesy/Viva-Libre.git";
+        public static void StartCoroutine(System.Collections.IEnumerator routine)
+        {
+            MelonCoroutines.Start(routine);
+        }
         public override void OnInitializeMelon()
         {
             Instance = this;
             LoggerInstance.Msg("Initialized.");
             //HarmonyInstance.PatchAll();
+            StartCoroutine(InitCustomItems());
             LoadVivaAssetBundle();
             GameInstance.onAssignedPlayerController += GameInstance_onAssignedPlayerController;
             GameInstance.onUnassignedPlayerController += GameInstance_onUnassignedPlayerController;
+        }
+        public static System.Collections.IEnumerator InitCustomItems()
+        {
+            var path = Path.Combine(MelonEnvironment.UserLibsDirectory, "CustomItems");
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+                yield break;
+            }
+
+            var itemDirectories = Directory.GetDirectories(path);
+
+            foreach (var itemDirectory in itemDirectories)
+            {
+                try
+                {
+                    CustomItemPacks.Add(new(itemDirectory));
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Error loading Custom Item Pack at \"{itemDirectory}\": {ex}");
+                }
+            }
         }
         public static GUISkin CustomSkin;
         public static Texture2D CustomLogo;

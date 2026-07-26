@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using CustomItems;
+using MelonLoader;
 using UnityEngine;
 
 namespace Viva_Libre
@@ -8,6 +9,7 @@ namespace Viva_Libre
         // Player Mods
         Page speedMods;
         Page movementMods;
+        Page characterManager;
         Page playerMods;
         // Server Mods
         Page timeMods;
@@ -21,33 +23,138 @@ namespace Viva_Libre
 
         Page unlockableManager;
         Page saveFileMods;
+        Page moneyManager;
+        Page moneyBagManager;
         Page clientMods;
         // Prop Spawner
         Page propSpawner;
+        // Extra Mods
+        Page extraMods;
+
         // Default Page
         private void ModsSetup()
         {
             // Player Mods
             speedMods = new("Speed Mods", this, [new Function("Increase Speed", IncreaseSpeed), new Function("Decrease Speed", DecreaseSpeed), new Function("Increase Jump", IncreaseJump), new Function("Decrease Jump", DecreaseJump)]);
             movementMods = new("Movement Mods", this, [new Function("No Clip", NoClip), new Function("Reset", ResetMovement), speedMods]);
-            playerMods = new("Player Mods", this, [movementMods, new Function("Respawn", Respawn), new Function("Smite Player", SmitePlayer), new Function("Teleport All Character", TeleportAllCharacters)]);
+            characterManager = new("Character Manager", this, [new Function("Respawn", Respawn), new Function("Toggle Invinciblility", ToggleInvincible), new Function("Ragdoll", Ragdoll), new Function("UnRagdoll", UnRagdoll), new Function("Knockout", Knockout)]);
+            playerMods = new("Player Mods", this, [movementMods, characterManager, new Function("Smite Player", SmitePlayer), new Function("Teleport All Character", TeleportAllCharacters)]);
             // Server Mods
             timeMods = new("Time Mods", this, [new Function("Morning", SetMorning), new Function("Midday", SetMidday), new Function("Evening", SetEvening), new Function("Midnight", SetMidnight)]);
             weatherMods = new("Weather Mods", this, [timeMods]);
             serverMods = new("Server Mods", this, [new Function("Toggle Low Gravity", LowGravity), new Function("Ragdoll All Players", RagdollAllPlayers), new Function("Respawn All Players", RespawnAllPlayers), weatherMods]);
             // Gameplay Mods
-            gameplayMods = new("Gameplay Mods", this, [playerMods, serverMods, new Function("null", null), new Function("null", null)]);
+            Page slowMo = new("Slow-Mo", this, [new Function("1x speed", () => Time.timeScale = 1), new Function("2x speed", ()=> Time.timeScale = 2), new Function("1/2x speed", ()=>Time.timeScale = 0.5f), new Function("1/4x speed", ()=>Time.timeScale = 0.25f), new Function("1/5x speed", () => Time.timeScale = 0.2f), new Function("1/10x speed", () => Time.timeScale = 0.1f), new Function("1/100x speed", () => Time.timeScale = 0.01f),]);
+            gameplayMods = new("Gameplay Mods", this, [playerMods, serverMods, slowMo]);
             // Client Mods
-            rewardsUnlocker = new("Rewards Unlocker", this, [new Function("Unlock All Vehicles", UnlockAllVehicles), new Function("Unlock All Outfits", UnlockAllOutfits), new Function("Unlock All Achievements", UnlockAllAchievements)]);
-            rewardsLocker = new("Rewards Locker", this, [new Function("Lock All Vehicles", LockAllVehicles), new Function("Lock All Outfits", LockAllOutfits), new Function("Lock All Achievements", LockAllAchievements)]);
+            rewardsUnlocker = new("Rewards Unlocker", this, [new Function("Unlock All Vehicles", UnlockAllVehicles), new Function("Unlock All Outfits", UnlockAllOutfits), new Function("Unlock All Achievements", UnlockAllAchievements), new Function("Unlock All Presents", UnlockAllPresents)]);
+            rewardsLocker = new("Rewards Locker", this, [new Function("Lock All Vehicles", LockAllVehicles), new Function("Lock All Outfits", LockAllOutfits), new Function("Lock All Achievements", LockAllAchievements), new Function("Lock All Presents", LockAllPresents)]);
             unlockableManager = new("Unlockable Manager", this, [rewardsUnlocker, rewardsLocker]);
-            saveFileMods = new("Save File Mods", this, [unlockableManager]);
-            clientMods = new("Client Mods", this, [saveFileMods, new Function("Toggle First Person", ToggleFirstPerson), new Function("Toggle Free Cam Border", ToggleFreeCamBorder)]);
+            moneyManager = new("Money Manager", this, [new Function("Give Money $25", () => GiveMoney(25)), new Function("Give Money $50", ()=>GiveMoney(50)), new Function("Give Money $100", ()=>GiveMoney(100)), new Function("$Give Money $1000", ()=>GiveMoney(1000)), new Function("$Give Money $500", () => GiveMoney(500)), new Function("$Give Money $10000", () => GiveMoney(10000))]);
+            saveFileMods = new("Save File Mods", this, [unlockableManager, moneyManager]);
+            clientMods = new("Client Mods", this, [saveFileMods, new Function("Toggle First Person Mode", ToggleFirstPerson), new Function("Toggle Free Cam Limits", ToggleFreeCamBorder)]);
             // Prop Spawner
-            propSpawner = new("Prop Spawner", this, [new Function("Toggle", ToggleSandbox)]);
+            moneyBagManager = new("Money Bag Spawner", this, [new Function("Spawn Money Bag $25", () => SpawnMoney(25)), new Function("Spawn Money Bag $50", () => SpawnMoney(50)), new Function("Spawn Money Bag $100", () => SpawnMoney(100)), new Function("$Spawn Money Bag $1000", () => SpawnMoney(1000)), new Function("$Spawn Money Bag $500", () => SpawnMoney(500)), new Function("$Spawn Money Bag $10000", () => SpawnMoney(10000))]);
+            List<Element> customItemElements = new();
+            foreach(var pack in Core.CustomItemPacks)
+            {
+                Page packPage = new(pack.packName, this, null);
+                List<Element> packElements = new();
+                foreach(var item in pack.items)
+                {
+                    packElements.Add(new Function(item.itemName, () => SpawnItem(item)) {
+                        onPreGUI = () => { GUILayout.BeginHorizontal(); },
+                        onPostGUI = () => { GUILayout.Box(item.itemSprite.texture);  GUILayout.EndHorizontal(); }
+                    });
+                }
+                packPage.elements = packElements.ToArray();
+                customItemElements.Add(packPage);
+            }
+            Page customItems = new("Custom Items", this, customItemElements.ToArray());
+            propSpawner = new("Prop Spawner", this, [moneyBagManager, customItems]);
+            // Extra Mods
+            extraMods = new("Extra Mods", this, [new Function("Realistic Car Crashes", ToggleRealisticCarCrashes)]);
             // Default Page
-            defaultPage = new("Main", this, [gameplayMods, clientMods, propSpawner, new Function("Swap Victim", NextPlayer)]);
+            defaultPage = new("Main", this, [gameplayMods, clientMods, propSpawner, extraMods, new Function("Swap Victim", NextPlayer)]);
             currentPage = defaultPage;
+        }
+
+        private void SpawnItem(CustomItem item)
+        {
+            if (character != null && item != null)
+            {
+                var pos = character.GetPlayerPosition() + character.GetPlayerForward();
+
+                NetworkPrefab.SpawnNetworkPrefab(item.gameObject, pos);
+            }
+        }
+
+        private void UnlockAllPresents()
+        {
+            foreach (var present in PresentManager.Instance.GetAllPresentGuids())
+            {
+                myController.GetPlayerPersistentData().MiscData.UnlockPresent(Guid.Parse(present));
+            }
+            myController.GetPlayerControllerUnlocker().ShowCounter(PromptCounterType.Present);
+            myController.GetPlayerControllerUnlocker().SendMessage("OnPresentUnlockedChanged");
+        }
+        private void LockAllPresents()
+        {
+            myController.GetPlayerPersistentData().MiscData.LockAllPresents();
+            myController.GetPlayerControllerUnlocker().ShowCounter(PromptCounterType.Present);
+            myController.GetPlayerControllerUnlocker().SendMessage("OnPresentUnlockedChanged");
+        }
+        private void Knockout()
+        {
+            character.GetRagdollController().Knockout();
+        }
+
+        private void UnRagdoll()
+        {
+            character.GetRagdollController().SendMessage("SetIsActiveRagdoll", true);
+        }
+
+        private void Ragdoll()
+        {
+            character.GetRagdollController().Ragdoll();
+        }
+
+        /// <summary>
+        /// https://www.youtube.com/watch?v=7s0nIxBLZio
+        /// </summary>
+        public bool invincible = false;
+
+        public void ToggleInvincible()
+        {
+            invincible = !invincible;
+            if (invincible)
+            {
+                character.GetRagdollController().SendMessage("SetIsActiveRagdoll", true);
+                character.GetRagdollController().LockRagdollState(this);
+            }
+            else
+            {
+                character.GetRagdollController().UnlockRagdollState(this);
+            }
+        }
+
+        public void SpawnMoney(int amount)
+        {
+            RewardManagerInstance.Instance.ServerReward(controller, RewardType.MoneyBag, amount);
+        }
+        public void GiveMoney(int amount)
+        {
+            myController.GetPlayerControllerEmployment().UpdateMoney(amount);
+        }
+        public void ResetMoney()
+        {
+            myController.GetPlayerControllerEmployment().UpdateMoney(-myController.GetPlayerControllerEmployment().GetLocalMoney());
+        }
+
+        public static bool realisticCarCrashes = false;
+        private static void ToggleRealisticCarCrashes()
+        {
+            realisticCarCrashes = !realisticCarCrashes;
         }
 
         private void ToggleFreeCamBorder()
@@ -160,7 +267,7 @@ namespace Viva_Libre
             PlayerController[] controllers = GameInstance.Instance.GetPlayerControllers().ToArray();
 
             selectedPlayer++;
-            if(selectedPlayer > controllers.Length) selectedPlayer = 0;
+            if(selectedPlayer >= controllers.Length) selectedPlayer = 0;
             controller = controllers[selectedPlayer];
         }
         private void SetEvening()

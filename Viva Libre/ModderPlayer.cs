@@ -151,19 +151,23 @@ namespace Viva_Libre
 
                 if(selectedElement == x && canNavigate)
                 {
+                    element?.onPreGUI?.Invoke();
                     if (GUILayout.Button(elementName, "hover"))
                     {
                         element?.Execute();
                     }
+                    element?.onPostGUI?.Invoke();
                 }
                 else
                 {
+                    element?.onPreGUI?.Invoke();
                     if (GUILayout.Button(elementName))
                     {
                         element?.Execute();
                     }
+                    element?.onPostGUI?.Invoke();
                 }
-                
+
             }
             if (GUILayout.Button("Go Back"))
             {

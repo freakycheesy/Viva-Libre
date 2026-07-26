@@ -511,6 +511,7 @@
 
 	<ItemGroup>
 		<Compile Include="Core.cs" />
+		<Compile Include="CustomItemPack.cs" />
 		<Compile Include="Element.cs" />
 		<Compile Include="FirstPerson.cs" />
 		<Compile Include="FreeCamHack.cs" />
@@ -519,7 +520,12 @@
 		<Compile Include="ModderPlayerMods.cs" />
 		<Compile Include="Page.cs" />
 		<Compile Include="QuickReflection.cs" />
+		<Compile Include="RealisticCarCrashes.cs" />
 		<Content Include="Directory.Build.props" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CustomItems\CustomItems.csproj" />
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
