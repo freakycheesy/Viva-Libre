@@ -6,7 +6,8 @@ Made for [MelonLoader](https://melonwiki.xyz/#/)/[LemonLoader](https://melonwiki
 # Quick Guide
 Patch the game with MelonLoader/LemonLoader 0.6.5!
 Download the latest [release](https://github.com/freakycheesy/Viva-Libre/releases) for your platform!
-Copy the contents of the zipped folder into your Wobbly Life Directory and run the game!
+
+Unzip the content from the corresponding release into your Wobbly Life Directory and run the game!
 
 # Controls
 
