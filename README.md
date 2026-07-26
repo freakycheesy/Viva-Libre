@@ -20,7 +20,8 @@ Cancel | B/Circle Button | Backspace Key | Go Back |
 # Mods
 - Gameplay Mods (modify the player or game state)
 - Client Mods (modify your own client and save files)
-- Prop Spawner (doesnt work)
+- Extra Mods (fps mode, realistic car crashes, remove free cam limits)
+- Prop Spawner (Spawn Money Bags and Custom Items (Supports lstwoMods custom items) )
 
 # Credits
 - [lstwoMods](https://lstwomods.github.io/) (viva libre is a simple, easy to use, local supported, cross-platform port of lstwoMods)
