@@ -23,6 +23,6 @@ Cancel | B/Circle Button | Backspace Key | Go Back |
 - Prop Spawner (doesnt work)
 
 # Credits
-- [lstwoMods](https://lstwomods.github.io/) (viva libre is a simple, easy to use, cross-platform port of lstwoMods)
+- [lstwoMods](https://lstwomods.github.io/) (viva libre is a simple, easy to use, local supported, cross-platform port of lstwoMods)
 
 *Currently supports the steam version of wobbly life (if you wanna help out on any version regardless of modding expirence or not, dm me on discord @freakycheesy)
