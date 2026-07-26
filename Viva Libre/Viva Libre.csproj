@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -513,10 +513,12 @@
 		<Compile Include="Core.cs" />
 		<Compile Include="Element.cs" />
 		<Compile Include="FirstPerson.cs" />
+		<Compile Include="FreeCamHack.cs" />
 		<Compile Include="Function.cs" />
 		<Compile Include="ModderPlayer.cs" />
 		<Compile Include="ModderPlayerMods.cs" />
 		<Compile Include="Page.cs" />
+		<Compile Include="QuickReflection.cs" />
 		<Content Include="Directory.Build.props" />
 	</ItemGroup>
 	

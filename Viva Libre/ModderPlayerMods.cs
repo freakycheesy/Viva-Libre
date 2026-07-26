@@ -42,7 +42,7 @@ namespace Viva_Libre
             rewardsLocker = new("Rewards Locker", this, [new Function("Lock All Vehicles", LockAllVehicles), new Function("Lock All Outfits", LockAllOutfits), new Function("Lock All Achievements", LockAllAchievements)]);
             unlockableManager = new("Unlockable Manager", this, [rewardsUnlocker, rewardsLocker]);
             saveFileMods = new("Save File Mods", this, [unlockableManager]);
-            clientMods = new("Client Mods", this, [saveFileMods, new Function("Toggle First Person", ToggleFirstPerson)]);
+            clientMods = new("Client Mods", this, [saveFileMods, new Function("Toggle First Person", ToggleFirstPerson), new Function("Toggle Free Cam Border", ToggleFreeCamBorder)]);
             // Prop Spawner
             propSpawner = new("Prop Spawner", this, [new Function("Toggle", ToggleSandbox)]);
             // Default Page
@@ -50,10 +50,16 @@ namespace Viva_Libre
             currentPage = defaultPage;
         }
 
-        FirstPerson firstPerson;
+        private void ToggleFreeCamBorder()
+        {
+            if (Core.freeCamPlayers.ContainsValue(this)) Core.freeCamPlayers.Remove(controller.GetGameplayCamera());
+            else Core.freeCamPlayers.Add(controller.GetGameplayCamera(), this);
+        }
+
         private void ToggleFirstPerson()
         {
-            firstPerson.firstPersonEnabled = !firstPerson.firstPersonEnabled;
+            if (Core.firstPersonPlayers.ContainsValue(this)) Core.firstPersonPlayers.Remove(controller.GetGameplayCamera());
+            else Core.firstPersonPlayers.Add(controller.GetGameplayCamera(), this);
         }
 
         private void ToggleSandbox()
@@ -219,14 +225,8 @@ namespace Viva_Libre
             MelonLogger.Msg($"After: {Physics.gravity}");
         }
 
-
         private void ModUpdate()
         {
-            if (firstPerson == null)
-            {
-                firstPerson = new() { player = this };
-                firstPerson.OnEnable();
-            }
         }
     }
 }

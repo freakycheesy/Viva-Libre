@@ -1,5 +1,6 @@
 ﻿using MelonLoader;
 using MelonLoader.Utils;
+using System.Reflection;
 using UnityEngine;
 
 [assembly: MelonInfo(typeof(Viva_Libre.Core), "Viva Libre", "1.0.0", "cheesy", "https://github.com/freakycheesy/Viva-Libre.git")]
@@ -14,7 +15,10 @@ namespace Viva_Libre
     }
     public class Core : MelonMod
     {
+        public const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
         public static Core Instance { get; private set; }
+        public static Dictionary<GameplayCamera, ModderPlayer> freeCamPlayers = new();
+        public static Dictionary<GameplayCamera, ModderPlayer> firstPersonPlayers = new();
         public static Dictionary<PlayerController, ModderPlayer> players = new();
         public static UIType UIType { get; private set; }
         public static string link => "https://github.com/freakycheesy/Viva-Libre.git";
@@ -22,7 +26,7 @@ namespace Viva_Libre
         {
             Instance = this;
             LoggerInstance.Msg("Initialized.");
-            HarmonyInstance.PatchAll();
+            //HarmonyInstance.PatchAll();
             LoadVivaAssetBundle();
             GameInstance.onAssignedPlayerController += GameInstance_onAssignedPlayerController;
             GameInstance.onUnassignedPlayerController += GameInstance_onUnassignedPlayerController;
@@ -114,21 +118,22 @@ namespace Viva_Libre
 
         public override void OnGUI()
         {
-            switch (UIType)
+            GUILayout.BeginHorizontal();
+            foreach (var item in players)
             {
-                case UIType.Unity:
-                    foreach (var item in players)
-                    {
-                        item.Value.OnUnityGUI();
-                    }
-                    break;
-                case UIType.Custom:
-                    foreach (var item in players)
-                    {
+                GUILayout.BeginVertical();
+                switch (UIType)
+                {
+                    case UIType.Custom:
                         item.Value.OnCustomGUI();
-                    }
-                    break;
+                        break;
+                    case UIType.Unity:
+                        item.Value.OnUnityGUI();
+                        break;
+                }
+                GUILayout.EndVertical();
             }
+            GUILayout.EndHorizontal();
         }
     }
 }

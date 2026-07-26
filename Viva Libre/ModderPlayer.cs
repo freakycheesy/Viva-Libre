@@ -1,8 +1,6 @@
 ﻿using MelonLoader;
-using MelonLoader.TinyJSON;
 using Newtonsoft.Json;
 using Rewired;
-using SingularityGroup.HotReload;
 using UnityEngine;
 
 namespace Viva_Libre
@@ -65,7 +63,6 @@ namespace Viva_Libre
         public void Stop()
         {
             myInputManager.EnableGameplayInput(this);
-            firstPerson.OnDisable();
         }
         public void LateUpdate()
         {
@@ -91,6 +88,7 @@ namespace Viva_Libre
             }
             ModUpdate();
         }
+
         bool up => myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.UpArrow) : myRewiredPlayer.GetButtonDown("UIVertical");
         bool down => myInputManager.IsUsingMouseKeyboard() ? Input.GetKeyDown(KeyCode.DownArrow) : myRewiredPlayer.GetNegativeButtonDown("UIVertical");
         private bool canNavigate => !myInputManager.IsUsingMouseKeyboard();

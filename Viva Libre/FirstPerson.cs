@@ -1,11 +1,5 @@
 ﻿using HarmonyLib;
-using RuntimeInspectorNamespace;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Viva_Libre
@@ -13,23 +7,9 @@ namespace Viva_Libre
     /// <summary>
     /// stolen from lstwoMods which is licensed under lstwoStudios or smth
     /// </summary>
-    public class FirstPerson 
+    [HarmonyPatch]
+    public static class FirstPerson 
     {
-        public static Dictionary<GameplayCamera, FirstPerson> firstPersonCameras = new();
-        public bool firstPersonEnabled = false;
-        public ModderPlayer player;
-        public GameplayCamera myCamera => player.controller.GetGameplayCamera();
-
-        public void OnDisable()
-        {
-            firstPersonCameras.Remove(myCamera);
-        }
-
-        public void OnEnable()
-        {
-            firstPersonCameras.Add(myCamera, this);
-        }
-
         [HarmonyPatch(typeof(CameraFocusPlayerCharacter))]
         public static class FirstPersonCameraPatch
         {
@@ -37,7 +17,7 @@ namespace Viva_Libre
             [HarmonyPrefix]
             static bool PrefixUpdateCamera(CameraFocusPlayerCharacter __instance, GameplayCamera camera)
             {
-                if (firstPersonCameras[camera].firstPersonEnabled)
+                if (Core.firstPersonPlayers.ContainsKey(camera))
                 {
                     __instance.SetUsingCharacterCutoff(true);
                     return true;
@@ -51,7 +31,7 @@ namespace Viva_Libre
             [HarmonyPriority(90)]
             static void PostfixUpdateCamera(CameraFocusPlayerCharacter __instance, GameplayCamera camera)
             {
-                if (firstPersonCameras[camera].firstPersonEnabled)
+                if (Core.firstPersonPlayers.ContainsKey(camera))
                 {
                     __instance.UpdateFirstPersonCamera(camera);
                     __instance.SetUsingCharacterCutoff(true);
@@ -67,7 +47,7 @@ namespace Viva_Libre
             static bool PrefixUpdateCamera(CameraFocusVehicle __instance, GameplayCamera camera)
             {
                 // Disable the original camera update method
-                if (firstPersonCameras[camera].firstPersonEnabled)
+                if (Core.firstPersonPlayers.ContainsKey(camera))
                     return false;
                 else
                     return true;
@@ -78,7 +58,7 @@ namespace Viva_Libre
             static void PostfixUpdateCamera(CameraFocusVehicle __instance, GameplayCamera camera)
             {
                 // Call custom update method for first-person camera behavior
-                if (firstPersonCameras[camera].firstPersonEnabled)
+                if (Core.firstPersonPlayers.ContainsKey(camera))
                     __instance.UpdateFirstPersonCamera(camera);
             }
 
@@ -86,7 +66,7 @@ namespace Viva_Libre
             [HarmonyPostfix]
             static void PostfixOnFocus(CameraFocusVehicle __instance, GameplayCamera camera)
             {
-                if (firstPersonCameras[camera].firstPersonEnabled)
+                if (Core.firstPersonPlayers.ContainsKey(camera))
                     __instance.ResetRotation();
             }
         }
